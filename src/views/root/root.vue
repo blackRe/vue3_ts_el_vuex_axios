@@ -1,0 +1,100 @@
+<template>
+	<div class="Root">
+		<el-row :gutter="24" style="margin-bottom: 20px;">
+			<el-col :span="6">
+				<div class="grid-content bg-purple">
+					<leftView></leftView>
+				</div>
+			</el-col>
+
+			<el-col :span="18">
+				<div class="rightContent">
+					<div class="rList">权限列表</div>
+					<div class="grid-content bg-purple">
+						<el-table :data="tableData" style="width: 100%">
+							<el-table-column prop="date" label="日期">
+							</el-table-column>
+							<el-table-column prop="name" label="姓名">
+							</el-table-column>
+							<el-table-column prop="address" label="地址">
+							</el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</el-col>
+
+		</el-row>
+
+	</div>
+</template>
+
+<script lang="ts">
+	import {
+		Component,
+		Vue
+	} from 'vue-property-decorator';
+	import leftView from '@/views/common/left.vue'; // @ is an alias to /src
+
+	@Component({
+		components: {
+			leftView
+		},
+	})
+	export default class Root extends Vue {
+		data() {
+
+			return {
+
+				tableData: [{
+					date: '2016-05-02',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1518 弄'
+				}, {
+					date: '2016-05-04',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1517 弄'
+				}, {
+					date: '2016-05-01',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1519 弄'
+				}, {
+					date: '2016-05-03',
+					name: '王小虎',
+					address: '上海市普陀区金沙江路 1516 弄'
+				}]
+			}
+		}
+	}
+</script>
+<style scoped="scoped" lang="less">
+	.Root {
+		// border: 1px solid red;
+		// background-color: #fff;
+
+
+
+		// width: 1200px;
+		// height: 200px;
+		// border: 10px solid orange;
+		.el-header {
+			background-color: #B3C0D1;
+			color: #333;
+			line-height: 60px;
+		}
+
+		.el-aside {
+			color: #333;
+		}
+
+		.rightContent {
+			padding: 20px;
+			background: #fff;
+
+			.rList {
+				background: #fff;
+				padding-left: 10px;
+			}
+		}
+
+	}
+</style>
