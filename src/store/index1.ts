@@ -30,6 +30,7 @@ export default new Vuex.Store({
 	  驱动应用的数据源*/
 	  count:1,
 	  ids:11,
+	  userObj:''
   },
   mutations: {
 	  /*更改 Vuex 的 store 中的状态的唯一方法是提交 mutation ；
@@ -43,6 +44,9 @@ export default new Vuex.Store({
 		incrementId(state, param) {
 			 		 state.ids=100
 			},
+			userSet(state, param){
+				state.userObj=param
+			}
   },
   actions: {
 	  /*有异步返回回来数据需要存储的时候用 actions ；

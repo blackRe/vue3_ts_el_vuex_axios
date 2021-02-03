@@ -44,31 +44,37 @@
 			return {
 				filterText: '',
 				        data: [{
-				          id: 1,
-				          label: '一级 1',
+				          id: '1',
+				          label: '系统管理',
 				          children: [{
-				            id: 4,
-				            label: '二级 1-1',
+				            id: '1-1',
+				            label: '菜单管理',
 							url:'baidu.com'
-				          }]
+				          },
+						  {
+						    id: '1-2',
+						    label: '菜单管理',
+						  	url:'baidu.com'
+						  }
+						  ]
 				        }, {
-				          id: 2,
-				          label: '一级 2',
+				          id: '2',
+				          label: '用户管理',
 				          children: [{
-				            id: 5,
+				            id: '2-1',
 				            label: '二级 2-1'
 				          }, {
-				            id: 6,
+				            id: '2-2',
 				            label: '二级 2-2'
 				          }]
 				        }, {
-				          id: 3,
-				          label: '一级 3',
+				          id: '3',
+				          label: '统计汇总',
 				          children: [{
-				            id: 7,
+				            id: '3-1',
 				            label: '二级 3-1'
 				          }, {
-				            id: 8,
+				            id: '3-2',
 				            label: '二级 3-2'
 				          }]
 				        }],

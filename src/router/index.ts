@@ -10,6 +10,19 @@ const routes: Array<RouteConfig> = [
     name: 'Root',
     component: () => import(/* webpackChunkName: "about" */ '../views/root/root.vue')
     
+  },
+  
+  {
+    path: '/setUser',
+    name: 'setUser',
+    component: () => import(/* webpackChunkName: "about" */ '../views/login/setUser.vue')
+    
+  },
+  {
+    path: '/',
+    name: 'Menu',
+    component: () => import(/* webpackChunkName: "about" */ '../views/sym/menu.vue')
+    
   },{
     path: '/chrilda',
     name: 'chrildA',

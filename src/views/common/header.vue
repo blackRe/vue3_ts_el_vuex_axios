@@ -7,10 +7,10 @@
 						后台管理系统
 					</div>
 				</el-col>
-				<el-col :span="12">
+				<el-col :span="12" v-if="userObj.name">
 					<div class="grid-content textR">
-						用户
-					</div>
+						</div> 欢迎您:{{userObj.name}}
+						<div class="userImg r" :style="{backgroundImage: 'url(' +userObj.imageUrl + ')'}"></div>
 				</el-col>
 			</el-row>
 		</div>
@@ -22,20 +22,44 @@
 		Component,
 		Vue
 	} from 'vue-property-decorator';
+	import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
+	
 	// import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 	@Component({
 		components: {
 			// HelloWorld,
 		},
+		computed: {
+		   
+		   // vuex使用对象展开运算符将 state 混入当前组件
+		     ...mapState([        //
+		     'userObj'
+		     ])
+					 
+		 },
+		created() {
+			console.log()
+			// this.getSvg()
+			// this.userData=this.userObj
+		},
 	})
 	export default class haerderView extends Vue {
-
+		userData:Any='';
 	}
 </script>
 <style scoped="scoped" lang="less">
 	.haerderView {
-
+			.userImg{
+				width: 36px;
+				height: 36px;
+				border-radius: 50%;
+				overflow: hidden;
+				border: 1px solid #e5e5e5;
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center center;
+			}
 		width: 100%;
 		background: #fff;
 		.heContent {
@@ -75,6 +99,7 @@
 
 			.textR {
 				text-align: right;
+				padding-right: 20px;
 			}
 
 			.row-bg {
