@@ -3,9 +3,12 @@ module.exports = {
     // 选项...
     // 当使用基于 HTML5 history.pushState 的路由时；
     // 当使用 pages 选项构建多页面应用时。
-    // baseUrl:"",
-    // 当运行 vue-cli-service build 时生成的生产环境构建文件的目录。注意目标目录在构建之前会被清除 (构建时传入 --no-clean 可关闭该行为)。
-    outputDir:"webApp",
+  
+     //baseUrl 从 Vue CLI 3.3 起已弃用，请使用publicPath
+   // publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+	publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
+	// 当运行 vue-cli-service build 时生成的生产环境构建文件的目录。注意目标目录在构建之前会被清除 (构建时传入 --no-clean 可关闭该行为)。
+    outputDir:"webDist",
     // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
     assetsDir:"assets",
     // 指定生成的 index.html 的输出路径 (相对于 outputDir)。也可以是一个绝对路径。
@@ -30,7 +33,7 @@ module.exports = {
 	devServer: {
 		open: true, // auto open brower 项目启动后自动打开浏览器...
 		    disableHostCheck: false,
-		    host: "127.0.0.1",
+		    host: "localhost",
 		    port: 8099, // 修改端口号
 		    https: false,
 		    hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy

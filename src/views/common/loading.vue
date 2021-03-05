@@ -41,7 +41,7 @@
 		    private parentValue: string; // 父组件传来的值用parentValue接收
 			
 			// 父传子
-			private msgPath: string = "要传递给父组件的值";
+			private msgPath: string = "要传递给父组件的值(klp)";
 			   // 方法一
 			      @Emit()    
 			      private handleToParent1() {

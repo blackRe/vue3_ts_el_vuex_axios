@@ -160,7 +160,7 @@
 					});
 
 				} else {
-					vm.$message.error('错了哦，这是一条错误消息');
+					vm.$message.error(res.data.msg);
 				}
 				vm.getSvg()
 

@@ -53,7 +53,7 @@
 				          },
 						  {
 						    id: '1-2',
-						    label: '菜单管理',
+						    label: '字典表',
 						  	url:'baidu.com'
 						  }
 						  ]
@@ -62,10 +62,10 @@
 				          label: '用户管理',
 				          children: [{
 				            id: '2-1',
-				            label: '二级 2-1'
+				            label: '用户新增'
 				          }, {
 				            id: '2-2',
-				            label: '二级 2-2'
+				            label: '用户列表'
 				          }]
 				        }, {
 				          id: '3',

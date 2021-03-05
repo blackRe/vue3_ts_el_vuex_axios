@@ -77,44 +77,7 @@
 		}
 
 
-		getLogin(): void {
-			let vm = this;
-			let userId = ''
-			let data = {
-				name: vm.ruleForm.Login,
-				pwd: vm.ruleForm.pwd,
-				yzm: vm.ruleForm.yzm
-			}
-			// this.$axios({
-			// 	url: vm.$ajaxUrl.login+'?'+qs.stringify(params),
-			// 	method: 'get',
-			vm.$axios({
-				url: vm.$ajaxUrl.userList,
-				method: 'post',
-				data: qs.stringify(data)
-			}).then((res) => {
-				console.log(res.data.code, 'res')
-				let code = res.data.code
-				if (code == 200) {
-
-					this.$store.commit('userSet', res.data.data)
-
-					vm.$router.push('/')
-					vm.$message({
-						message: '登录成功',
-						type: 'success'
-					});
-
-				} else {
-					vm.$message.error('错了哦，这是一条错误消息');
-				}
-				vm.getSvg()
-
-			}, (error) => {
-				vm.getSvg()
-				console.log(error);
-			});
-		}
+	
 
 	}
 </script>

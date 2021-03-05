@@ -19,7 +19,7 @@
 					<div class="rList">权限列表</div>
 					<div class="grid-content bg-purple">
 						<el-table :data="tableData" style="width: 100%">
-							<el-table-column  prop="name" label="姓名">
+							<el-table-column prop="name" label="姓名">
 							</el-table-column>
 							<el-table-column prop="phone" label="电话">
 							</el-table-column>
@@ -31,7 +31,7 @@
 			</el-col>
 
 		</el-row>
-		
+
 	</div>
 </template>
 
@@ -44,38 +44,44 @@
 	import leftView from '@/views/common/left.vue'; // @ is an alias to /src
 	import imgUp from '@/views/common/imgUp.vue'; // @ is an alias to /src
 	import loading from '@/views/common/loading.vue'; // @ is an alias to /src
-
-	@Component({
+	import commonFun from '../../assets/js/commonFun'
+	 @Component({
 		components: {
 			leftView,
 			imgUp,
 			loading
 		},
 		created() {
-		
+
 			this.getLogin()
-		
+
 		}
 	})
 	export default class Root extends Vue {
+		
+		
 		//传给子组件的值
-    private msg: string = "没看错，我在加载中....（传给子组件的值）"
-		tableData:object=[]
+		private msg: string = "没看错，我在加载中....（传给子组件的值）"
+		tableData: object = []
 		data() {
 			return {
 
-				
+
 			}
 		}
 		// 子传父,接收
 		// 处理子组件传过来的值 val：是自定义的
-		
-			private childValue: string = "";
-		    private handleChildValue(val: string) {
-		        // val: 子组件传过来的值
-		        this.childValue = val;
-				alert('接收到数据')
-		    }
+		/*
+		public 公共的，public表明该数据成员、成员函数是对所有用户开放的，所有用户都可以直接进行调用，在程序的任何其它地方访问。
+		private  私有的，
+		private表示私有，私有的意思就是除了class自己之外，其他都不可以使用。和public相反，加上这个修饰的属性和方法，只允许在自己本身这个类里访问，程序的任何其它地方都不能访问
+		protected  受保护的*/
+		private childValue: string = "";
+		private handleChildValue(val: string) {
+			// val: 子组件传过来的值
+			this.childValue = val;
+			alert('接收到数据')
+		}
 
 		getLogin(): void {
 			let vm = this;
@@ -94,27 +100,27 @@
 				console.log(res.data.data, 'res')
 				let code = res.data.code
 				if (code == 200) {
-				vm.tableData=res.data.data
-		// 			this.$store.commit('userSet', res.data.data)
-		// 			vm.$message({
-		// 				message: '登录成功',
-		// 				type: 'success'
-		// 			});
-		
+					vm.tableData = res.data.data
+					// 			this.$store.commit('userSet', res.data.data)
+					// 			vm.$message({
+					// 				message: '登录成功',
+					// 				type: 'success'
+					// 			});
+
 				} else {
-					vm.$message.error( res.data.msg);
+					vm.$message.error(res.data.msg);
 				}
-				
-		
+
+
 			}, (error) => {
-				
+
 				console.log(error);
 			});
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 </script>
 <style scoped="scoped" lang="less">
