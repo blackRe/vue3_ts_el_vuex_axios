@@ -72,7 +72,7 @@
 					
 					
 		// 控制loading显示与否
-		loading: string = true
+		loading: string = false
 		data() {
 			return {
 				isCollapse: true

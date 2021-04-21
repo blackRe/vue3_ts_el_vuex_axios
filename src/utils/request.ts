@@ -28,7 +28,7 @@ const removePending: any = (config: any, f: any) => {
 /* 创建axios实例 */
 const service = axios.create({
   baseURL: "", //** 基础地址 要请求的url前缀  ,使用跨域后可以直接去掉
-  timeout: 5000 // 请求超时时间
+  timeout: 5000000000 // 请求超时时间
 });
 
 /* request拦截器 */

@@ -6,10 +6,20 @@ import store from './store/index1.ts'
 Vue.config.productionTip = false
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
+//json格式化
+import JsonViewer from 'vue-json-viewer'
+Vue.use(JsonViewer)
 // import ViewUI from 'view-design';
 // import 'view-design/dist/styles/iview.css';
 
+// import Promise from "promise-polyfill";
+
+// if(!window.Promise){
+//     window.Promise = Promise;
+// }
+
+import { VueJsonp } from 'vue-jsonp'
+Vue.use(VueJsonp)
 import './assets/css/common.css';
 
 

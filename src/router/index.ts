@@ -11,11 +11,22 @@ const routes: Array<RouteConfig> = [
     component: () => import( '../views/root/root.vue')
     
   },
-  
+  {
+    path: '/pf',
+    name: 'pf',
+    component: () => import( '../views/pf/pf.vue')
+    
+  },
   {
     path: '/setUser',
     name: 'setUser',
     component: () => import( '../views/login/setUser.vue')
+    
+  },
+  {
+    path: '/postman',
+    name: 'postman',
+    component: () => import( '../views/postman/postman.vue')
     
   },
   {
