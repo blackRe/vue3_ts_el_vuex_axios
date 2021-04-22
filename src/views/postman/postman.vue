@@ -23,18 +23,19 @@
 					<li class="urlList l" @click="addUrl"><i class="el-icon-plus"></i></li>
 				</ul>
 				<div v-for="(pdata,index) in contentAjax" v-if="setIndex==index">
+					
 					<div style="margin-top: 15px;">
 						<!-- @change="setContentAjax" -->
-						<el-input style="width: 92%;margin-right: 1%;" placeholder="请输入内容" @change="changeUrl(pdata.radioBody)" 
-							v-model="pdata.httpUrl" class="input-with-select">
+						<el-input style="width: 92%;margin-right: 1%;" placeholder="请输入内容"
+							@change="changeUrl(pdata.radioBody)" v-model="pdata.httpUrl" class="input-with-select">
 							<el-select v-model="pdata.ajaxType" slot="prepend" placeholder="请选择">
 								<el-option label="POST" value="POST"></el-option>
 								<el-option label="GET" value="GET"></el-option>
 								<el-option label="PUA" value="PUA"></el-option>
 							</el-select>
-							<el-button slot="append"  @click='saveAjax'>发送
+							<el-button slot="append" @click='saveAjax'>发送
 							</el-button>
-							
+
 							<!-- <el-button slot="append" v-if="pdata.contentType!='form-data'" @click='saveAjax'>发送
 							</el-button>
 							<el-button slot="append" v-else @click='saveAjaxChange'>1发送</el-button> -->
@@ -73,10 +74,11 @@
 											v-else>禁用</span></el-checkbox>
 								</div>
 								<div class="addKey l" :class="{addKeyDisble:data.actVal==false}">
-									<el-input v-if="data.valueType=='text'" @change="setAddData(pdata.radioBody,'paramsAct')"
-										v-model="data.KEY" placeholder="KEY"></el-input>
-									<el-input v-else v-model="data.KEY" @change="setAddData(pdata.radioBody,'paramsAct')"
-										placeholder="输入文件的上传的name">
+									<el-input v-if="data.valueType=='text'"
+										@change="setAddData(pdata.radioBody,'paramsAct')" v-model="data.KEY"
+										placeholder="KEY"></el-input>
+									<el-input v-else v-model="data.KEY"
+										@change="setAddData(pdata.radioBody,'paramsAct')" placeholder="输入文件的上传的name">
 									</el-input>
 
 									<!-- <div class="addSelect">
@@ -88,8 +90,9 @@
 									</div> -->
 								</div>
 								<div class="addKey l" :class="{addKeyDisble:data.actVal==false}">
-									<el-input v-if="data.valueType=='text'" @change="setAddData(pdata.radioBody,'paramsAct')"
-										v-model="data.VALUE" placeholder="VALUE"></el-input>
+									<el-input v-if="data.valueType=='text'"
+										@change="setAddData(pdata.radioBody,'paramsAct')" v-model="data.VALUE"
+										placeholder="VALUE"></el-input>
 									<!-- <input v-if="data.valueType=='file'&&pdata.contentType=='form-data'" ref='fleImg' class="up_input l" type="file" multiple="multiple"
 										@change="imgValidation5($event,index)" />
 									<div class="fName l" v-if="data.filesName.length>0"
@@ -100,10 +103,11 @@
 
 								</div>
 								<div class="addKey l">
-									<el-input v-model="data.DESCRIPTION" @change="setAddData(pdata.radioBody,'paramsAct')"
-										placeholder="DESCRIPTION">
+									<el-input v-model="data.DESCRIPTION"
+										@change="setAddData(pdata.radioBody,'paramsAct')" placeholder="DESCRIPTION">
 									</el-input>
-									<i v-if="indexItem <(pdata.paramsAct.length-1)" @click="delAjax(index,indexItem,'paramsAct')" class="delBtn el-icon-close"></i>
+									<i v-if="indexItem <(pdata.paramsAct.length-1)"
+										@click="delAjax(index,indexItem,'paramsAct')" class="delBtn el-icon-close"></i>
 								</div>
 
 
@@ -146,7 +150,8 @@
 									<el-input v-model="data.DESCRIPTION" @change="setAddData(pdata.radioBody)"
 										placeholder="DESCRIPTION">
 									</el-input>
-									<i v-if="indexItem <(pdata.headersAct.length-1)" @click="delAjax(index,indexItem,'headersAct')" class="delBtn el-icon-close"></i>
+									<i v-if="indexItem <(pdata.headersAct.length-1)"
+										@click="delAjax(index,indexItem,'headersAct')" class="delBtn el-icon-close"></i>
 								</div>
 
 
@@ -193,7 +198,8 @@
 									<el-input v-model="data.DESCRIPTION" @change="setAddData(pdata.radioBody)"
 										placeholder="DESCRIPTION">
 									</el-input>
-									<i v-if="indexItem <(pdata.addData.length-1)" @click="delAjax(index,indexItem,'addData')" class="delBtn el-icon-close"></i>
+									<i v-if="indexItem <(pdata.addData.length-1)"
+										@click="delAjax(index,indexItem,'addData')" class="delBtn el-icon-close"></i>
 								</div>
 
 
@@ -273,8 +279,11 @@
 
 				this.contentAjax = JSON.parse(localStorage.getItem('contentAjax'))
 			}
-			if (!localStorage.getItem('setIndex')) {
+			if (localStorage.getItem('setIndex')) {
 				this.setIndex = localStorage.getItem('setIndex')
+				if(this.setIndex >(this.contentAjax.length-1)){
+					this.setIndex =0
+				}
 
 			}
 
@@ -389,59 +398,64 @@
 			// this.setContentAjax()
 		}
 		delUrl(index: number): void {
-
-			this.contentAjax.splice(index, 1)
-
-			this.setIndex = (this.contentAjax.length - 1)
-			localStorage.setItem('setIndex', JSON.stringify(this.setIndex))
-			this.setContentAjax()
+			let vm=this;
+			vm.contentAjax.splice(index, 1)
+			setTimeout(function(){
+				vm.setIndex = (index- 1)
+			},50)
+			vm.setContent(vm.setIndex)
+			vm.setContentAjax()
+			
 		}
 		setContent(index: number): void {
 			this.setIndex = index
 			localStorage.setItem('setIndex', JSON.stringify(index))
 
 		}
-		 GetRequestAll(url:string): void {
-		   //var url = url; //获取url中"?"符后的字串  
-		   var theRequest = new Object();  
-		   if (url.indexOf("?") != -1) {  
-		      var str = url.substr((url.indexOf("?")+1),(url.length)); 
-			   console.log(str,'str')
-		      var strs = str.split("&");  
-		      for(var i = 0; i < strs.length; i ++) {  
-		         theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);  
-		      }  
-		   }  
-		   return theRequest;  
-		}  
-		changeUrl(val:string): void{
+		GetRequestAll(url: string): void {
+			//var url = url; //获取url中"?"符后的字串  
+			var theRequest = new Object();
+			if (url.indexOf("?") != -1) {
+				var str = url.substr((url.indexOf("?") + 1), (url.length));
+				console.log(str, 'str')
+				var strs = str.split("&");
+				for (var i = 0; i < strs.length; i++) {
+					theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+				}
+			}
+			return theRequest;
+		}
+		changeUrl(val: string): void {
 			let vm = this;
 			let obj = {}
 			if (val == 'Params') {
-				console.log(vm.contentAjax[vm.setIndex],'vm.contentAjax[vm.setIndex]')
-				let sl = vm.contentAjax[vm.setIndex].paramsAct.length - 1
-				let urlObj='';
-				if(vm.contentAjax[vm.setIndex].httpUrl){
-					this.contentAjax[vm.setIndex].paramsAct=[]
-					urlObj=vm.GetRequestAll(vm.contentAjax[vm.setIndex].httpUrl)
-					for(let j in urlObj){
-						console.log(urlObj[j],'jjjj')
-						obj = {
-							valueType: 'text', //判断显示输入框还是其他类型
-							params: [], //处理好的图片或者文件类型
-							filesName: [], //上传文件的名字
-							actVal: true, //该行是否被选中，默认为true，选中的参数将会被传递
-							KEY: j, //输入框的key
-							VALUE: urlObj[j], //输入的内容
-							ESCRIPTION: '' //输入的描述
+				console.log(vm.contentAjax[vm.setIndex], 'vm.contentAjax[vm.setIndex]')
+
+				let urlObj = '';
+				let sl;
+				if (vm.contentAjax[vm.setIndex].httpUrl) {
+					if(vm.contentAjax[vm.setIndex].httpUrl.indexOf("?") != -1){
+						this.contentAjax[vm.setIndex].paramsAct = []
+						urlObj = vm.GetRequestAll(vm.contentAjax[vm.setIndex].httpUrl)
+						for (let j in urlObj) {
+							console.log(urlObj[j], 'jjjj')
+							obj = {
+								valueType: 'text', //判断显示输入框还是其他类型
+								params: [], //处理好的图片或者文件类型
+								filesName: [], //上传文件的名字
+								actVal: true, //该行是否被选中，默认为true，选中的参数将会被传递
+								KEY: j, //输入框的key
+								VALUE: urlObj[j], //输入的内容
+								ESCRIPTION: '' //输入的描述
+							}
+							console.log(this.contentAjax[vm.setIndex].paramsAct)
+							this.contentAjax[vm.setIndex].paramsAct.unshift(obj)
+							console.log(this.contentAjax[vm.setIndex].paramsAct.length)
 						}
-						this.contentAjax[vm.setIndex].paramsAct.unshift(obj)
-					}
-					console.log(urlObj)
-						if (vm.contentAjax[vm.setIndex].paramsAct[sl].KEY || vm.contentAjax[vm.setIndex].paramsAct[sl].VALUE ||vm.contentAjax[vm.setIndex].paramsAct[sl].ESCRIPTION) {
-							
-							
-							//vm.contentAjax[vm.setIndex].httpUrl
+						sl = (vm.contentAjax[vm.setIndex].paramsAct.length - 1)
+						if (vm.contentAjax[vm.setIndex].paramsAct[sl].KEY || vm.contentAjax[vm.setIndex].paramsAct[sl]
+							.VALUE || vm.contentAjax[vm.setIndex].paramsAct[sl].ESCRIPTION) {
+
 							obj = {
 								valueType: 'text', //判断显示输入框还是其他类型
 								params: [], //处理好的图片或者文件类型
@@ -453,50 +467,65 @@
 							}
 							this.contentAjax[vm.setIndex].paramsAct.push(obj)
 						}
+					}else{
+						this.contentAjax[vm.setIndex].paramsAct = []
+						obj = {
+							valueType: 'text', //判断显示输入框还是其他类型
+							params: [], //处理好的图片或者文件类型
+							filesName: [], //上传文件的名字
+							actVal: true, //该行是否被选中，默认为true，选中的参数将会被传递
+							KEY: '', //输入框的key
+							VALUE: '', //输入的内容
+							ESCRIPTION: '' //输入的描述
+						}
+						this.contentAjax[vm.setIndex].paramsAct.push(obj)
+					}
 				}
-				
-				
-			} 
+
+
+			}
 		}
-		
+
 		setAddData(val: string): void {
 			let vm = this;
 			let obj = {}
-			
+
 
 			if (val == 'Params') {
-				console.log(vm.contentAjax[vm.setIndex],'vm.contentAjax[vm.setIndex]')
+				console.log(vm.contentAjax[vm.setIndex], 'vm.contentAjax[vm.setIndex]')
 				let sl = vm.contentAjax[vm.setIndex].paramsAct.length - 1
-				let urlObj='';
-				
-				
-				
-				
-				let urlGet=[]
-				for(let i=0;i<vm.contentAjax[vm.setIndex].paramsAct.length;i++){
+				let urlObj = '';
+
+
+				let urlGet = []
+				for (let i = 0; i < vm.contentAjax[vm.setIndex].paramsAct.length; i++) {
 					if (vm.contentAjax[vm.setIndex].paramsAct[i].actVal == true) {
 						if (vm.contentAjax[vm.setIndex].paramsAct[i].KEY) {
-					urlGet.push((vm.contentAjax[vm.setIndex].paramsAct[i].KEY + '=' + vm.contentAjax[vm.setIndex].paramsAct[i].VALUE))
-					
+							urlGet.push((vm.contentAjax[vm.setIndex].paramsAct[i].KEY + '=' + vm.contentAjax[vm
+								.setIndex].paramsAct[i].VALUE))
+
 						}
 					}
 				}
-				var urlSet=''
+				var urlSet = ''
 				if (vm.contentAjax[vm.setIndex].httpUrl.indexOf("?") != -1) {
-					let ends=vm.contentAjax[vm.setIndex].httpUrl.indexOf("?")
-					
-				   urlSet = vm.contentAjax[vm.setIndex].httpUrl.substr(0,ends); 
-							 
-				}    
-				  console.log(urlGet,'strpppp')
-				
-				vm.contentAjax[vm.setIndex].httpUrl=urlSet+'?'+urlGet.join('&')
-				if (vm.contentAjax[vm.setIndex].paramsAct[sl].KEY || vm.contentAjax[vm.setIndex].paramsAct[sl].VALUE ||vm.contentAjax[vm.setIndex].paramsAct[sl].ESCRIPTION) {
-					
-					
-					
-					
-					
+					let ends = vm.contentAjax[vm.setIndex].httpUrl.indexOf("?")
+
+					urlSet = vm.contentAjax[vm.setIndex].httpUrl.substr(0, ends);
+
+				}else{
+					urlSet=vm.contentAjax[vm.setIndex].httpUrl
+				}
+				console.log(urlGet,urlSet, 'strpppp')
+
+				vm.contentAjax[vm.setIndex].httpUrl = urlSet + '?' + urlGet.join('&')
+				if (vm.contentAjax[vm.setIndex].paramsAct[sl].KEY || vm.contentAjax[vm.setIndex].paramsAct[sl].VALUE ||
+					vm.contentAjax[vm.setIndex].paramsAct[sl].ESCRIPTION) {
+
+
+
+
+
 					//vm.contentAjax[vm.setIndex].httpUrl
 					obj = {
 						valueType: 'text', //判断显示输入框还是其他类型
@@ -508,23 +537,24 @@
 						ESCRIPTION: '' //输入的描述
 					}
 					this.contentAjax[vm.setIndex].paramsAct.push(obj)
-					
-					
+
+
 				}
-				
-				
-				
-				
-				  
-				  
-				  
-				  
+
+
+
+
+
+
+
+
 			} else if (val == 'Headers') {
 				let sl = vm.contentAjax[vm.setIndex].headersAct.length - 1
-				console.log(vm.contentAjax[vm.setIndex],'vm.contentAjax[vm.setIndex]')
+				console.log(vm.contentAjax[vm.setIndex], 'vm.contentAjax[vm.setIndex]')
 				// alert('pppp')
-				if (vm.contentAjax[vm.setIndex].headersAct[sl].KEY || vm.contentAjax[vm.setIndex].headersAct[sl].VALUE || vm.contentAjax[vm.setIndex].headersAct[sl].ESCRIPTION) {
-				
+				if (vm.contentAjax[vm.setIndex].headersAct[sl].KEY || vm.contentAjax[vm.setIndex].headersAct[sl]
+					.VALUE || vm.contentAjax[vm.setIndex].headersAct[sl].ESCRIPTION) {
+
 					obj = {
 						valueType: 'text', //判断显示输入框还是其他类型
 						params: [], //处理好的图片或者文件类型
@@ -633,7 +663,8 @@
 			// alert(this.contentAjax.length)
 			// this.setIndex=this.contentAjax.length
 			vm.setIndex = (vm.contentAjax.length - 1)
-
+			vm.setContent((vm.setIndex-0))
+			vm.setContentAjax()
 			// contentAjax:Array=[
 		}
 		saveAjaxChange(index, cIndex): void {
@@ -835,7 +866,8 @@
 			for (let i = 0; i < vm.contentAjax[vm.setIndex].addData.length; i++) {
 				if (vm.contentAjax[vm.setIndex].addData[i].actVal == true) {
 					if (vm.contentAjax[vm.setIndex].addData[i].KEY && vm.contentAjax[vm.setIndex].addData[i].VALUE) {
-						strObj.push((vm.contentAjax[vm.setIndex].addData[i].KEY + '=' + vm.contentAjax[vm.setIndex].addData[i].VALUE))
+						strObj.push((vm.contentAjax[vm.setIndex].addData[i].KEY + '=' + vm.contentAjax[vm.setIndex]
+							.addData[i].VALUE))
 
 						//obj[vm.contentAjax[vm.setIndex].addData[i].KEY] =vm.contentAjax[vm.setIndex].addData[i].VALUE 
 
@@ -860,7 +892,8 @@
 				for (let i = 0; i < fileContent.length; i++) {
 					console.log(fileContent[i].name, fileContent.length)
 					let tName = fileContent[i].name
-					console.log(vm.contentAjax[vm.setIndex].addData[index], vm.contentAjax[vm.setIndex].addData[index].filesName)
+					console.log(vm.contentAjax[vm.setIndex].addData[index], vm.contentAjax[vm.setIndex].addData[index]
+						.filesName)
 					vm.contentAjax[vm.setIndex].addData[index].filesName.push(tName)
 
 				}
@@ -903,7 +936,7 @@
 						type: 'success'
 					});
 					vm.$refs.fleImg.value = ''
-					vm.contentAjax[vm.setIndex].addData[index].filesName=''
+					vm.contentAjax[vm.setIndex].addData[index].filesName = ''
 				} else {
 					vm.$message.error(res.data.msg);
 				}
