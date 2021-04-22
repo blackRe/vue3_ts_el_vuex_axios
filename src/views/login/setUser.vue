@@ -20,7 +20,7 @@
 							<el-input v-model="ruleForm.pwd1" placeholder="请再次输入密码"></el-input>
 						</el-form-item>
 						<el-form-item label="上传头像">
-							<el-upload class="avatar-uploader" name='avatar' :action="$ajaxUrl.profile" 
+							<el-upload class="avatar-uploader" name='avatar' :action="$ajaxUrl.profile1" 
 							:show-file-list="false"
 							
 							 :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">

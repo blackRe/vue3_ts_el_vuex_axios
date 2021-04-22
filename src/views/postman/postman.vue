@@ -184,8 +184,9 @@
 										v-model="data.VALUE" placeholder="VALUE"></el-input>
 									<input v-if="data.valueType=='file'&&pdata.contentType=='form-data'" ref='fleImg'
 										class="up_input l" type="file" multiple="multiple"
-										@change="imgValidation5($event,index)" />
+										@change="imgValidation5($event,indexItem)" />
 									<!-- 显示上传文件的名成年 -->
+									
 									<div class="fName l" v-if="data.filesName.length>0"
 										v-for='(fname,indexFna) in data.filesName' @click="delFiName(index,indexFna)">
 										<span v-if="data.filesName.length==1"> {{fname}}</span>
@@ -855,6 +856,7 @@
 			//	vue图片上传
 
 			let vm = this;
+			
 			let fileContent = file.target.files
 			let params = new FormData();
 			console.log(fileContent, 'vm.$refs.fleImg.value')
@@ -866,47 +868,45 @@
 			for (let i = 0; i < vm.contentAjax[vm.setIndex].addData.length; i++) {
 				if (vm.contentAjax[vm.setIndex].addData[i].actVal == true) {
 					if (vm.contentAjax[vm.setIndex].addData[i].KEY && vm.contentAjax[vm.setIndex].addData[i].VALUE) {
-						strObj.push((vm.contentAjax[vm.setIndex].addData[i].KEY + '=' + vm.contentAjax[vm.setIndex]
-							.addData[i].VALUE))
+						strObj.push((vm.contentAjax[vm.setIndex].addData[i].KEY + '=' + vm.contentAjax[vm.setIndex].addData[i].VALUE))
 
 						//obj[vm.contentAjax[vm.setIndex].addData[i].KEY] =vm.contentAjax[vm.setIndex].addData[i].VALUE 
 
 					}
 				}
 			}
+			
+			
 			// params.append(obj)
 			// console.log(obj,'fileContent.length')
 			params.append('file', fileContent[0])
-			if (!vm.contentAjax[vm.setIndex].addData[index].filesName) {
-				vm.contentAjax[vm.setIndex].addData[index].filesName = []
-			}
+			// if (!vm.contentAjax[vm.setIndex].addData[index].filesName) {
+			// 	vm.contentAjax[vm.setIndex].addData[index].filesName = []
+			// }
+			console.log(index,vm.contentAjax[vm.setIndex].addData[index],'filesName')
+			vm.contentAjax[vm.setIndex].addData[index].filesName = []
 			if (fileContent.length == 1) {
 				// 单张上传
-				// params.append('file', fileContent[0])
-				// params.append('avatar', fileContent[0], fileContent[0].name)
+				
+					
 				vm.contentAjax[vm.setIndex].addData[index].filesName.push(fileContent[0].name)
-				// console.log(vm.contentAjax[vm.setIndex].addData[index],'fileContent[i].namellllll')
+					//vm.contentAjax[vm.setIndex].addData[index].filesName.push(fileContent[0].name)
+				//vm.$forceUpdate();
+				console.log(fileContent[0].name,vm.contentAjax[vm.setIndex].addData[index].filesName,'fileContent[i].namellllll')
 			} else {
 				// 多张上传
 
 				for (let i = 0; i < fileContent.length; i++) {
 					console.log(fileContent[i].name, fileContent.length)
 					let tName = fileContent[i].name
-					console.log(vm.contentAjax[vm.setIndex].addData[index], vm.contentAjax[vm.setIndex].addData[index]
-						.filesName)
+					console.log(vm.contentAjax[vm.setIndex].addData[index], vm.contentAjax[vm.setIndex].addData[index].filesName)
 					vm.contentAjax[vm.setIndex].addData[index].filesName.push(tName)
 
 				}
 			}
-			//vm.contentAjax[vm.setIndex].addData[index].params=params
-
-			//vm.addData[index].params=params
-
-			// vm.setAddData()
-			// return
-			//console.log(params,'vm.addData[index].params')
+				
 			let stPl = ''
-			let ajaxType = ('ajaxType=' + vm.contentAjax[vm.setIndex].ajaxType)
+			let ajaxType = ('ajaxType=' + vm.contentAjax[vm.setIndex].ajaxType+'&httpUrl='+vm.contentAjax[vm.setIndex].httpUrl)
 			strObj.push(ajaxType)
 
 			if (strObj.length > 0) {
@@ -914,13 +914,14 @@
 				stPl = strObj.join('&')
 			}
 			console.log(stPl, 'stPl')
+			
 			// return
 			vm.$axios({
 
 
 				url: vm.$ajaxUrl.profile + '?' + stPl,
 				// url:vm.contentAjax[vm.setIndex].httpUrl,
-				method: vm.contentAjax[vm.setIndex].ajaxType,
+				method: 'POST',
 				data: params, //qs.stringify(data)
 				headers: {
 					'Content-Type': 'multipart/form-data'
@@ -935,14 +936,15 @@
 						message: '操作成功',
 						type: 'success'
 					});
-					vm.$refs.fleImg.value = ''
-					vm.contentAjax[vm.setIndex].addData[index].filesName = ''
+					
+					
 				} else {
 					vm.$message.error(res.data.msg);
 				}
 
 			}, (error) => {
 				// vm.getSvg()
+				vm.$refs.fleImg.value = ''
 				console.log(error);
 			});
 
