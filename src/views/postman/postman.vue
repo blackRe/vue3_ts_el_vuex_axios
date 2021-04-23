@@ -182,8 +182,9 @@
 								<div class="addKey l" :class="{addKeyDisble:data.actVal==false}">
 									<el-input v-if="data.valueType=='text'" @change="setAddData(pdata.radioBody)"
 										v-model="data.VALUE" placeholder="VALUE"></el-input>
+										 <!-- multiple="multiple" -->
 									<input v-if="data.valueType=='file'&&pdata.contentType=='form-data'" ref='fleImg'
-										class="up_input l" type="file" multiple="multiple"
+										class="up_input l" type="file" 
 										@change="imgValidation5($event,indexItem)" />
 									<!-- 显示上传文件的名成年 -->
 									
@@ -875,35 +876,31 @@
 					}
 				}
 			}
-			
-			
-			// params.append(obj)
-			// console.log(obj,'fileContent.length')
+			let postFileUrl=vm.$ajaxUrl.profile//根据数量判断使用哪个url
 			paramsFile.append('file', fileContent[0])
-			// if (!vm.contentAjax[vm.setIndex].addData[index].filesName) {
-			// 	vm.contentAjax[vm.setIndex].addData[index].filesName = []
-			// }
 			console.log(index,vm.contentAjax[vm.setIndex].addData[index],'filesName')
 			vm.contentAjax[vm.setIndex].addData[index].filesName = []
 			if (fileContent.length == 1) {
 				// 单张上传
 				
-					
+				postFileUrl=vm.$ajaxUrl.profile
 				vm.contentAjax[vm.setIndex].addData[index].filesName.push(fileContent[0].name)
-					//vm.contentAjax[vm.setIndex].addData[index].filesName.push(fileContent[0].name)
-				//vm.$forceUpdate();
 				console.log(fileContent[0].name,vm.contentAjax[vm.setIndex].addData[index].filesName,'fileContent[i].namellllll')
-			} else {
-				// 多张上传
-
-				for (let i = 0; i < fileContent.length; i++) {
-					console.log(fileContent[i].name, fileContent.length)
-					let tName = fileContent[i].name
-					console.log(vm.contentAjax[vm.setIndex].addData[index], vm.contentAjax[vm.setIndex].addData[index].filesName)
-					vm.contentAjax[vm.setIndex].addData[index].filesName.push(tName)
-
-				}
-			}
+			} 
+			//  if(fileContent.length > 1&&fileContent.length<=8){
+			// 	// 多张上传
+			// 		postFileUrl=vm.$ajaxUrl.coolProfile
+			// 	for (let i = 0; i < fileContent.length; i++) {
+			// 		console.log(fileContent[i].name, fileContent.length)
+			// 		let tName = fileContent[i].name
+			// 		console.log(vm.contentAjax[vm.setIndex].addData[index], vm.contentAjax[vm.setIndex].addData[index].filesName)
+			// 		vm.contentAjax[vm.setIndex].addData[index].filesName.push(tName)
+			// 		paramsFile.append('gallery', fileContent[i])
+			// 	}
+				
+			// }else{
+			// 	vm.$message.error('一次最多上传8张图片');
+			// }
 				
 			let stPl = ''
 			let ajaxType = ('ajaxType=' + vm.contentAjax[vm.setIndex].ajaxType+'&httpUrl='+vm.contentAjax[vm.setIndex].httpUrl)
@@ -919,8 +916,8 @@
 			vm.$axios({
 
 
-				url: vm.$ajaxUrl.profile + '?' + stPl,
-				// url:vm.contentAjax[vm.setIndex].httpUrl,
+				//url: vm.$ajaxUrl.profile + '?' + stPl,
+				url: postFileUrl + '?' + stPl,
 				method: 'POST',
 				data: paramsFile, //qs.stringify(data)
 				headers: {
