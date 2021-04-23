@@ -1,5 +1,6 @@
 let basUrl='/apiProxy/api/'
 let bas='/apiProxy/'
+// let bas='/'
 let times=new Date().getTime()
 console.log(times,'times')
 let svg=basUrl+'svgCaptcha/svg?time='+times

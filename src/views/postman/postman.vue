@@ -858,7 +858,7 @@
 			let vm = this;
 			
 			let fileContent = file.target.files
-			let params = new FormData();
+			let paramsFile = new FormData();
 			console.log(fileContent, 'vm.$refs.fleImg.value')
 			//vm.contentAjax[vm.setIndex].addData[index].params = JSON.stringify(file)
 			// 获取动态的from参数
@@ -879,7 +879,7 @@
 			
 			// params.append(obj)
 			// console.log(obj,'fileContent.length')
-			params.append('file', fileContent[0])
+			paramsFile.append('file', fileContent[0])
 			// if (!vm.contentAjax[vm.setIndex].addData[index].filesName) {
 			// 	vm.contentAjax[vm.setIndex].addData[index].filesName = []
 			// }
@@ -922,7 +922,7 @@
 				url: vm.$ajaxUrl.profile + '?' + stPl,
 				// url:vm.contentAjax[vm.setIndex].httpUrl,
 				method: 'POST',
-				data: params, //qs.stringify(data)
+				data: paramsFile, //qs.stringify(data)
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}
